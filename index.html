@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183e32">
+  <meta name="description" content="Turn perfectly good metric measurements into school buses, cheeseburgers, and other deeply unnecessary units. Then make a sign.">
+  <title>Anything But Metric — An unnecessary conversion service</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header"><a class="wordmark" href="./" aria-label="Anything But Metric home"><span class="logo" aria-hidden="true">↔</span>anything<span>but</span>metric<span class="logo-dot">.</span></a><a href="#how-it-works" class="header-link">The method to the madness <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <section class="intro"><div class="eyebrow"><span></span> AN UNNECESSARY CONVERSION SERVICE</div><h1>Anything.<br>But <span class="metric-word">metric.<svg aria-hidden="true" viewBox="0 0 400 24"><path d="M4 13 Q175 -2 393 9 M22 21 Q208 4 370 16"/></svg></span></h1><p>Why say 100 meters when you could say<br class="desktop-break"> <strong>8.33 school buses?</strong> Exactly.</p><div class="intro-stamp" aria-hidden="true"><span>EST.</span><b>≈</b><span>CLOSE ENOUGH</span></div></section>
+    <section class="workspace" aria-label="Measurement converter and sign maker">
+      <div class="converter">
+        <div class="section-label"><span>01</span> START WITH SOMETHING SENSIBLE</div>
+        <form id="measurement-form" novalidate>
+          <label for="dimension">What are we measuring?</label><select id="dimension" name="dimension"></select>
+          <div class="measurement-row"><div><label for="amount">Your measurement</label><input id="amount" name="amount" type="number" min="0" step="any" value="100" inputmode="decimal" required></div><div><label for="unit">Unit &amp; scale</label><select id="unit" name="unit"></select></div></div>
+          <p id="input-error" class="error" role="alert" hidden></p>
+          <button class="primary-button" type="submit">Make it unnecessarily American <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="comparison-heading"><div class="section-label"><span>02</span> PICK YOUR NEW UNIT</div><button type="button" id="shuffle" class="text-button" aria-label="Shuffle the three comparisons">↻ Shuffle</button></div>
+        <div id="comparisons" class="comparisons" role="group" aria-label="Choose a comparison"></div>
+        <p id="result-status" class="sr-only" role="status" aria-live="polite"></p>
+        <div id="reference" class="reference"></div>
+      </div>
+      <div class="sign-column">
+        <div class="preview-label"><div class="section-label"><span>03</span> MAKE A SCENE. OR A SIGN.</div><span class="live-pill"><i></i> LIVE PREVIEW</span></div>
+        <div class="sign-stage"><div class="sign-post" aria-hidden="true"></div><div id="sign-preview" role="img" aria-label="Your generated novelty sign"></div><span class="stage-caption">A very official-looking unofficial sign.</span></div>
+        <div class="sign-settings"><div><label for="sign-heading">Sign heading</label><input id="sign-heading" maxlength="42" value="BEAR COUNTRY"></div><div><label for="sign-style">Sign style</label><select id="sign-style"><option value="park">National park</option><option value="warning">Caution yellow</option><option value="blueprint">Blueprint blue</option></select></div></div>
+        <label for="sign-message">Message <span class="optional">(optional)</span></label><input id="sign-message" maxlength="100" placeholder="Leave blank for the suggested message">
+        <div class="download-row"><button class="primary-button" id="download-png" type="button">↓ Download PNG</button><button class="secondary-button" id="download-svg" type="button">↓ SVG</button><button class="secondary-button" id="print" type="button">Print</button></div>
+        <p id="download-status" class="download-note" role="status">Made for sharing. Available as an image or a printable sign.</p>
+      </div>
+    </section>
+    <section id="how-it-works" class="how-it-works"><div><div class="eyebrow">THERE IS ACTUAL MATH IN HERE</div><h2>Ridiculous units.<br> Reasonable arithmetic.</h2></div><div><p>Pick a measurement. We divide it by a reference object of the same kind, then randomly choose three comparisons. Shuffle for a new batch. The sign follows your favorite.</p><p>Object sizes are approximate. Each selection shows its reference value and assumptions. Force uses weight under standard gravity; pressure compares magnitudes, with gauge and absolute references labeled. Liters are included as an SI-compatible convenience.</p><p class="fine-print">These are novelty comparisons and signs. The number on a sign is rounded; the underlying conversion uses the full reference value.</p><details><summary>Browse the reference library <span aria-hidden="true">+</span></summary><div id="reference-library"></div></details></div></section>
+  </main>
+  <footer><a class="footer-brand" href="./">anythingbutmetric.</a><span>Because “about three refrigerators” just feels right.</span><a id="github-link" href="https://github.com/BennettLandman/anythingbutmetric" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></footer>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
