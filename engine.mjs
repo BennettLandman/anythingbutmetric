@@ -1,6 +1,7 @@
-// All reference values use the dimension's coherent SI base (m, kg, m², m³, s, N, Pa).
-export const G = 9.80665;
-export const PSI = 6894.757293168;
+// All reference values use coherent SI units for their physical quantity.
+import {G, PSI} from './constants.mjs';
+import {additions, extraDimensions} from './library.mjs';
+export {G, PSI, AVOGADRO} from './constants.mjs';
 const mint = 'https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications';
 const nfl = 'https://operations.nfl.com/media/tvglh0mx/2023-rulebook_final.pdf';
 const nist = 'https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9';
@@ -74,25 +75,54 @@ export const dimensions = {
     ref('cat-on-a-postcard pressure','cats-on-a-postcard pressure',4.5*G/0.01,'🐈','A hypothetical 4.5 kg cat’s weight spread over 100 cm², at standard gravity.')
   ]}
 };
+for (const [id, refs] of Object.entries(additions)) dimensions[id].refs.push(...refs);
+Object.assign(dimensions, extraDimensions);
+// Ratios describe reference magnitudes, rather than adding pressures or temperatures.
+for (const r of dimensions.pressure.refs) r.ratio = true;
+dimensions.force.verb = 'About';
+for (const r of dimensions.force.refs) {
+  if(!r.ratio) r.displayName = r.name.endsWith('weight') ? r.name : `the weight of a ${r.name}`;
+  r.ratio = true;
+}
 export function toSI(value, dimension, unit) {
   const spec=dimensions[dimension];
   const scale=spec?.units.find(([u])=>u===unit)?.[1];
   const n=Number(value);
-  if(String(value).trim()==='' || !Number.isFinite(n) || n<=0 || !scale) throw new Error('Enter a positive, finite measurement.');
+  if(String(value).trim()==='' || !Number.isFinite(n) || (n<0 || (n===0 && !spec?.allowZero)) || !scale) throw new Error(spec?.allowZero ? 'Enter a finite temperature of zero kelvin or above.' : 'Enter a positive, finite measurement.');
   const result=n*scale;
-  if(!Number.isFinite(result)||result<=0) throw new Error('That measurement is outside the supported numeric range.');
+  if(!Number.isFinite(result)||(result===0&&n!==0)) throw new Error('That measurement is outside the supported numeric range.');
   return result;
 }
 export function formatNumber(n) {
+  if(n===0) return '0';
   if(n>=1e6 || n<0.001) return n.toExponential(2).replace('e+',' × 10^').replace('e-',' × 10^-');
   return new Intl.NumberFormat('en-US',{maximumSignificantDigits:3}).format(n);
 }
 export function chooseComparisons(si,dimension,random=Math.random,exclude=[]) {
-  const all=dimensions[dimension].refs.filter(r=>Number.isFinite(si/r.value)&&si/r.value>0);
+  if(!Number.isFinite(si)||si<0||(si===0&&!dimensions[dimension]?.allowZero)) throw new Error('Unsupported measurement.');
+  const all=dimensions[dimension].refs.filter(r=>Number.isFinite(si/r.value)&&(si===0||si/r.value>0));
   if(all.length<3) throw new Error('Try a less extreme measurement so three comparisons can be represented.');
-  // Favor readable counts while allowing absurd fractions when the scale demands it.
-  const ranked=all.map(r=>({...r, count:si/r.value, score: Math.abs(Math.log10(si/r.value)-0.8)*0.22 - Math.log(Math.max(random(),1e-12)) + (exclude.includes(r.name)?2:0)}));
-  return ranked.sort((a,b)=>a.score-b.score).slice(0,3);
+  const ranked=all.map(r=>{
+    const count=si/r.value;
+    const distance=si===0?0:Math.abs(Math.log10(count));
+    return {...r,count,close:si>0&&distance<=1+1e-12,distance,score:distance*0.35-Math.log(Math.max(random(),1e-12))+(exclude.includes(r.name)?2:0)};
+  });
+  const nearby=ranked.filter(r=>r.close);
+  const candidates=nearby.length?nearby:ranked.filter(r=>r.distance===Math.min(...ranked.map(r=>r.distance)));
+  const anchor=candidates.sort((a,b)=>a.score-b.score)[0];
+  return [anchor,...ranked.filter(r=>r.name!==anchor.name).sort((a,b)=>a.score-b.score).slice(0,2)];
 }
-export function comparisonText(r) {return `${formatNumber(r.count)} ${Math.abs(r.count-1)<1e-12?r.name:r.plural}`;}
+export function comparisonName(r) {return r.ratio?`× ${r.displayName||r.name}`:(Math.abs(r.count-1)<1e-12?r.name:r.plural);}
+export function comparisonText(r) {return `${formatNumber(r.count)} ${comparisonName(r)}`;}
+export function coverageFor(dimension) {
+  const d=dimensions[dimension],scales=d.units.map(([,v])=>v),min=Math.min(...scales),max=Math.max(...scales);
+  const refs=d.refs.map(r=>r.value).sort((a,b)=>a-b);
+  const probes=[...scales,min,max];
+  for(let i=1;i<refs.length;i++) {
+    const midpoint=Math.sqrt(refs[i-1])*Math.sqrt(refs[i]);
+    if(midpoint>=min&&midpoint<=max) probes.push(midpoint);
+  }
+  const worst=Math.max(...probes.map(value=>Math.min(...refs.map(v=>Math.abs(Math.log10(value/v))))));
+  return {min,max,withinFactor:10**worst,covered:worst<=1+1e-12};
+}
 export function escapeXML(s) {return String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]));}
