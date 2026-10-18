@@ -2,7 +2,11 @@ import {dimensions,toSI,chooseComparisons,formatNumber,comparisonText,comparison
 import {emojiArt} from './assets/emoji-art.mjs';
 import {signStyles, buildSign} from './signs.mjs';
 import {baseUnitCoverage,namedUnitCoverage,baseDerivedCoverage,otherDerivedCoverage,additionalQuantityCoverage} from './unit-coverage.mjs';
+import {chooseTagline} from './taglines.mjs';
 const $=id=>document.getElementById(id);
+const tagline=chooseTagline(),taglineComparison=document.createElement('strong');
+taglineComparison.textContent=`${tagline.comparison}?`;
+$('hero-tagline').replaceChildren(`Why say ${tagline.measurement} when you could say `,taglineComparison,' Exactly.');
 let choices=[],selected=0,currentSI=100,currentDimension='length',currentMeasurement='100 m';
 let svgText='';
 const escape=escapeXML;

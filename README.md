@@ -1,5 +1,10 @@
 # Anything But Metric
 
+The opening tagline randomly selects one of 146 examples on each page load: two
+for every measurement category, plus two for Celsius. Each starts with a tidy,
+even SI amount and calculates the relatable equivalent from the same reference
+catalog used by the converter. Converting or shuffling does not change it.
+
 An unnecessary conversion service: turn SI measurements into school buses, cheeseburgers, and other everyday objects, then download a novelty sign.
 
 ## Use it
