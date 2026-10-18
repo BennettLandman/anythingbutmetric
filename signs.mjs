@@ -53,7 +53,11 @@ export function buildSign({reference:r,dimension:d,measurement,title,message,sty
   const messageY=titleY+(titleLines.length-1)*(titleSize+5)+37;
   const countY=messageY+(msgLines.length-1)*19+64;
   const unitY=countY+34,tailY=unitY+(nameLines.length-1)*27+28;
-  const captionY=tailY+(d.tail?31:10),bottomY=classic?tailY+(d.tail?37:18):captionY+39;
+  const captionY=tailY+(d.tail?31:10);
+  const noticeLines=lines(r.signNote||d.signNote||'',65);
+  const noticeY=classic?tailY+(d.tail?26:12):captionY+19;
+  const usualBottom=classic?tailY+(d.tail?37:18):captionY+39;
+  const bottomY=noticeLines.length?Math.max(usualBottom,noticeY+(noticeLines.length-1)*13+25):usualBottom;
   const height=bottomY+(classic?43:style==='diner'?64:style==='drama'?73:52);
   const iconY=classic?23:style==='diner'?45:style==='postcard'?50:style==='drama'?58:53;
   const iconSize=84;
@@ -62,6 +66,6 @@ export function buildSign({reference:r,dimension:d,measurement,title,message,sty
   const font=style==='bureau'?'Courier New, monospace':'Arial, Helvetica, sans-serif';
   const numberSize=style==='diner'?58:52;
   // All decorations stay above or below the expanding data block.
-  const body=`${icon}${!classic?text(s.caption,style==='drama'?172:style==='postcard'?152:34,{size:style==='postcard'?8:9,weight:700,spacing:1,color:s.fg,font}):''}${text(titleLines,titleY,{size:titleSize,weight:800,spacing:style==='bureau'?0.5:1.5,color:s.fg,font:style==='diner'?'Georgia, serif':font,italic:style==='diner'})}${text(msgLines,messageY,{size:14,color:s.fg,font})}${text(formatNumber(r.count),countY,{size:numberSize,weight:800,color:s.accent||s.fg,font:style==='diner'?'Georgia, serif':font,italic:style==='diner'})}${text(nameLines,unitY,{size:22,weight:700,color:s.fg,font})}${d.tail?text(d.tail,tailY,{size:16,color:s.fg,font}):''}${!classic?text(caption,captionY,{size:style==='bureau'?8:9,weight:700,color:s.accent,spacing:0.8,font}):''}<path d="M180 ${bottomY-17}h180" stroke="${s.fg}" opacity=".3"/>${text(`≈ ${measurement} · anythingbutmetric · novelty sign`,bottomY,{size:9,color:s.fg})}${text('Twemoji © Twitter & contributors · CC BY 4.0 · twemoji.twitter.com',bottomY+15,{size:7,color:s.fg})}`;
+  const body=`${icon}${!classic?text(s.caption,style==='drama'?172:style==='postcard'?152:34,{size:style==='postcard'?8:9,weight:700,spacing:1,color:s.fg,font}):''}${text(titleLines,titleY,{size:titleSize,weight:800,spacing:style==='bureau'?0.5:1.5,color:s.fg,font:style==='diner'?'Georgia, serif':font,italic:style==='diner'})}${text(msgLines,messageY,{size:14,color:s.fg,font})}${text(formatNumber(r.count),countY,{size:numberSize,weight:800,color:s.accent||s.fg,font:style==='diner'?'Georgia, serif':font,italic:style==='diner'})}${text(nameLines,unitY,{size:22,weight:700,color:s.fg,font})}${d.tail?text(d.tail,tailY,{size:16,color:s.fg,font}):''}${!classic?text(caption,captionY,{size:style==='bureau'?8:9,weight:700,color:s.accent,spacing:0.8,font}):''}${noticeLines.length?text(noticeLines,noticeY,{size:8,weight:600,color:s.fg,font}):''}<path d="M180 ${bottomY-17}h180" stroke="${s.fg}" opacity=".3"/>${text(`≈ ${measurement} · anythingbutmetric · novelty sign`,bottomY,{size:9,color:s.fg})}${text('Twemoji © Twitter & contributors · CC BY 4.0 · twemoji.twitter.com',bottomY+15,{size:7,color:s.fg})}`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="${height*2}" viewBox="0 0 540 ${height}" role="img" aria-label="${escape(title+': '+message+' '+comparisonText(r)+' '+d.tail)}" data-sign-style="${style}">${frame(style,height)}${body}</svg>`;
 }

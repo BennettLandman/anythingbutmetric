@@ -71,7 +71,7 @@ export const additions={
 };
 
 export const extraDimensions={
- current:{label:'Current',base:'A',value:1,unit:'A',heading:'AMPED UP',verb:'About the in use by',tail:'',hint:'Current is charge per second. Device currents are illustrative operating assumptions, not wiring ratings.',units:[['pA',1e-12],['nA',1e-9],['µA',1e-6],['mA',1e-3],['A',1],['kA',1e3],['MA',1e6]],refs:[
+ current:{label:'Current',base:'A',value:1,unit:'A',heading:'AMPED UP',verb:'Equivalent current: about',tail:'',hint:'Current is charge per second. Device currents are illustrative operating assumptions, not wiring ratings.',units:[['pA',1e-12],['nA',1e-9],['µA',1e-6],['mA',1e-3],['A',1],['kA',1e3],['MA',1e6]],refs:[
   r('tiny chip leak','tiny chip leaks',1e-12,'💻','Assumed tiny electronic leakage current: 1 pA.'),
   r('sensitive sensor leak','sensitive sensor leaks',1e-10,'🔬','Assumed sensor leakage current: 100 pA.'),
   r('faint-light photodiode','faint-light photodiodes',1e-9,'💡','Assumed photodiode signal under faint illumination: 1 nA.'),

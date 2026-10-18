@@ -1,12 +1,18 @@
 import {dimensions,toSI,chooseComparisons,formatNumber,comparisonText,comparisonName,coverageFor,AVOGADRO,escapeXML} from './engine.mjs';
 import {emojiArt} from './assets/emoji-art.mjs';
 import {signStyles, buildSign} from './signs.mjs';
+import {baseUnitCoverage,namedUnitCoverage,baseDerivedCoverage,otherDerivedCoverage,additionalQuantityCoverage} from './unit-coverage.mjs';
 const $=id=>document.getElementById(id);
 let choices=[],selected=0,currentSI=100,currentDimension='length',currentMeasurement='100 m';
 let svgText='';
 const escape=escapeXML;
-for(const [id,d] of Object.entries(dimensions)) $('dimension').add(new Option(d.label,id));
-function setUnits(){const d=dimensions[$('dimension').value];$('unit').replaceChildren(...d.units.map(([u])=>new Option(u,u)));$('unit').value=d.unit;$('amount').value=d.value;$('sign-heading').value=d.heading;$('sign-message').value='';$('dimension-hint').textContent=d.hint||'Each batch includes a nearby comparison when the reference library covers your measurement.';}
+for(const group of ['Motion & space','Matter & chemistry','Heat & energy','Electricity','Magnetism','Light & waves','Radiation & sunshine']) {
+ const section=document.createElement('optgroup');section.label=group;
+ for(const [id,d] of Object.entries(dimensions)) if(d.group===group) section.append(new Option(d.label,id));
+ $('dimension').append(section);
+}
+
+function setUnits(){const d=dimensions[$('dimension').value];$('unit').replaceChildren(...d.units.map(([u])=>new Option(u,u)));$('unit').value=d.unit;$('amount').value=d.value;$('amount').min=d.allowZero?($('unit').value==='°C'?'-273.15':'0'):'0';$('sign-heading').value=d.heading;$('sign-message').value='';$('dimension-hint').textContent=d.hint||'Each batch includes a nearby comparison when the reference library covers your measurement.';}
 for(const [id,s] of Object.entries(signStyles)) $('sign-style').add(new Option(s.label,id));
 function renderSign(){
   const d=dimensions[currentDimension],r=choices[selected];if(!r)return;
@@ -32,7 +38,7 @@ function renderChoices(){
 function renderReference(){
  const r=choices[selected],d=dimensions[currentDimension];
  const entities=currentDimension==='substance'?`${formatNumber(currentSI*AVOGADRO)} entities. One mole is exactly 6.02214076 × 10²³ specified entities. `:'';
- $('reference').innerHTML=`<strong>The fine print:</strong> ${escape(entities)}${escape(r.displayName||r.name)} ≈ ${escape(formatNumber(r.value))} ${d.base}. ${escape(r.note)}${r.source?` <a href="${escape(r.source)}" target="_blank" rel="noopener noreferrer">Reference ↗</a>`:''}`;
+ $('reference').innerHTML=`<strong>The fine print:</strong> ${escape(entities)}${escape(r.displayName||r.name)} ≈ ${escape(formatNumber(r.value))} ${d.base}. ${escape(r.note)}${r.source?` <a href="${escape(r.source)}" target="_blank" rel="noopener noreferrer">Reference ↗</a>`:d.definitionSource?` <a href="${escape(d.definitionSource)}" target="_blank" rel="noopener noreferrer">Unit definition ↗</a>`:''}`;
 }
 function convert(shuffle=false){
   try{const dim=$('dimension').value,si=toSI($('amount').value,dim,$('unit').value);const same=dim===currentDimension&&si===currentSI;const next=chooseComparisons(si,dim,Math.random,shuffle&&same?choices.map(r=>r.name):[]);
@@ -41,6 +47,7 @@ function convert(shuffle=false){
 }
 function download(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
 $('dimension').addEventListener('change',()=>{setUnits();convert();});
+$('unit').addEventListener('change',()=>{$('amount').min=$('unit').value==='°C'?'-273.15':'0';});
 $('measurement-form').addEventListener('submit',e=>{e.preventDefault();convert();});
 $('shuffle').addEventListener('click',()=>convert(true));
 for(const id of ['sign-heading','sign-message','sign-style'])$(id).addEventListener('input',renderSign);
@@ -53,7 +60,8 @@ $('download-png').addEventListener('click',async()=>{
 });
 $('surprise-style').addEventListener('click',()=>{const others=Object.keys(signStyles).filter(id=>id!==$('sign-style').value);$('sign-style').value=others[Math.floor(Math.random()*others.length)];renderSign();});
 $('print').addEventListener('click',()=>window.print());
-$('reference-library').innerHTML=Object.values(dimensions).map(d=>`<section class="library-dimension"><h3>${d.label}</h3><p class="library-coverage">${d.refs.length} references. Coverage within 10× from ${escape(formatNumber(coverageFor(Object.keys(dimensions).find(id=>dimensions[id]===d)).min))} ${d.base} to ${escape(formatNumber(coverageFor(Object.keys(dimensions).find(id=>dimensions[id]===d)).max))} ${d.base}, including the gaps between prefixes.</p>${d.refs.map(r=>`<p class="library-item"><strong>${escape(r.displayName||r.name)}:</strong> ${escape(formatNumber(r.value))} ${d.base}. ${escape(r.note)}${r.source?` <a href="${escape(r.source)}" target="_blank" rel="noopener noreferrer">Reference ↗</a>`:''}</p>`).join('')}</section>`).join('');
+$('reference-library').innerHTML=Object.values(dimensions).map(d=>`<section class="library-dimension"><h3>${d.label}</h3><p class="library-coverage">${d.refs.length} references. Coverage within 10× from ${escape(formatNumber(coverageFor(Object.keys(dimensions).find(id=>dimensions[id]===d)).min))} ${d.base} to ${escape(formatNumber(coverageFor(Object.keys(dimensions).find(id=>dimensions[id]===d)).max))} ${d.base}, including the gaps between prefixes.</p>${d.refs.map(r=>`<p class="library-item"><strong>${escape(r.displayName||r.name)}:</strong> ${escape(formatNumber(r.value))} ${d.base}. ${escape(r.note)}${r.source?` <a href="${escape(r.source)}" target="_blank" rel="noopener noreferrer">Reference ↗</a>`:d.definitionSource?` <a href="${escape(d.definitionSource)}" target="_blank" rel="noopener noreferrer">Unit definition ↗</a>`:''}</p>`).join('')}</section>`).join('');
+$('unit-coverage-list').innerHTML=[['Seven base units',baseUnitCoverage],['22 specially named derived units',namedUnitCoverage],['Derived quantities from base units',baseDerivedCoverage],['Further derived quantities',otherDerivedCoverage],['Additional quantity distinctions',additionalQuantityCoverage]].map(([title,rows])=>`<section class="coverage-section"><h3>${title}</h3><table><thead><tr><th>Quantity</th><th>SI unit</th><th>Menu label</th></tr></thead><tbody>${rows.map(([name,unit,id])=>`<tr><td>${escape(name)}</td><td>${escape(unit)}</td><td>${escape(dimensions[id].label)}</td></tr>`).join('')}</tbody></table></section>`).join('');
 setUnits();
 // Start with the example that inspired the site; subsequent conversions are random.
 choices=dimensions.length.refs.slice(0,3).map(r=>({...r,count:100/r.value,close:100/r.value>=0.1&&100/r.value<=10}));renderChoices();

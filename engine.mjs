@@ -1,6 +1,9 @@
 // All reference values use coherent SI units for their physical quantity.
 import {G, PSI} from './constants.mjs';
 import {additions, extraDimensions} from './library.mjs';
+import {namedDimensions} from './named-units.mjs';
+import {radiationDimensions} from './radiation.mjs';
+import {derivedDimensions} from './derived-units.mjs';
 export {G, PSI, AVOGADRO} from './constants.mjs';
 const mint = 'https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications';
 const nfl = 'https://operations.nfl.com/media/tvglh0mx/2023-rulebook_final.pdf';
@@ -77,7 +80,17 @@ export const dimensions = {
   ]}
 };
 for (const [id, refs] of Object.entries(additions)) dimensions[id].refs.push(...refs);
-Object.assign(dimensions, extraDimensions);
+Object.assign(dimensions, extraDimensions, namedDimensions, radiationDimensions, derivedDimensions);
+dimensions.temperature.units.push(['°C',1,273.15]);
+dimensions.temperature.hint = 'Temperature accepts kelvin or Celsius (K = °C + 273.15). Comparisons use absolute kelvin ratios, not perceived hotness; 0 °C is not zero kelvin.';
+for(const [group,ids] of Object.entries({
+  'Motion & space':['length','area','volume','time','force'],
+  'Matter & chemistry':['mass','pressure','substance'],
+  'Heat & energy':['energy','temperature'],
+  'Electricity':['current'],
+  'Light & waves':['luminous']
+})) for(const id of ids) dimensions[id].group=group;
+
 // Ratios describe reference magnitudes, rather than adding pressures or temperatures.
 for (const r of dimensions.pressure.refs) r.ratio = true;
 dimensions.force.verb = 'About';
@@ -86,12 +99,12 @@ for (const r of dimensions.force.refs) {
   r.ratio = true;
 }
 export function toSI(value, dimension, unit) {
-  const spec=dimensions[dimension];
-  const scale=spec?.units.find(([u])=>u===unit)?.[1];
-  const n=Number(value);
-  if(String(value).trim()==='' || !Number.isFinite(n) || (n<0 || (n===0 && !spec?.allowZero)) || !scale) throw new Error(spec?.allowZero ? 'Enter a finite temperature of zero kelvin or above.' : 'Enter a positive, finite measurement.');
-  const result=n*scale;
-  if(!Number.isFinite(result)||(result===0&&n!==0)) throw new Error('That measurement is outside the supported numeric range.');
+  const spec=dimensions[dimension],definition=spec?.units.find(([u])=>u===unit);
+  const n=Number(value),scale=definition?.[1],offset=definition?.[2]||0;
+  if(String(value).trim()===''||!Number.isFinite(n)||!scale) throw new Error('Enter a finite measurement and a supported unit.');
+  const result=n*scale+offset;
+  if(!Number.isFinite(result)||(result===0&&n!==0&&!offset)) throw new Error('That measurement is outside the supported numeric range.');
+  if(result<0||(result===0&&!spec.allowZero)) throw new Error(spec.allowZero?'Enter a temperature at or above absolute zero.':'Enter a positive measurement.');
   return result;
 }
 export function formatNumber(n) {
