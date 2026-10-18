@@ -68,7 +68,7 @@ export const additions={
 };
 
 export const extraDimensions={
- current:{label:'Electric current',base:'A',value:1,unit:'A',heading:'AMPED UP',verb:'About the in use by',tail:'',hint:'Current is charge per second. Device currents are illustrative operating assumptions, not wiring ratings.',units:[['pA',1e-12],['nA',1e-9],['µA',1e-6],['mA',1e-3],['A',1],['kA',1e3],['MA',1e6]],refs:[
+ current:{label:'Current',base:'A',value:1,unit:'A',heading:'AMPED UP',verb:'About the in use by',tail:'',hint:'Current is charge per second. Device currents are illustrative operating assumptions, not wiring ratings.',units:[['pA',1e-12],['nA',1e-9],['µA',1e-6],['mA',1e-3],['A',1],['kA',1e3],['MA',1e6]],refs:[
   r('tiny chip leak','tiny chip leaks',1e-12,'💻','Assumed tiny electronic leakage current: 1 pA.'),
   r('sensitive sensor leak','sensitive sensor leaks',1e-10,'🔬','Assumed sensor leakage current: 100 pA.'),
   r('faint-light photodiode','faint-light photodiodes',1e-9,'💡','Assumed photodiode signal under faint illumination: 1 nA.'),
@@ -84,7 +84,7 @@ export const extraDimensions={
   ratio('a lightning-bolt peak current',30000,'⚡','Illustrative peak current: 30 kA; a transient peak, not a continuous appliance load.'),
   ratio('an extreme lightning-bolt peak current',300000,'⛈️','Hypothetical extreme-event comparison: 300 kA peak; real flashes vary.')
  ]},
- temperature:{label:'Thermodynamic temperature',base:'K',value:300,unit:'K',heading:'HOW HOT IS THAT?',verb:'Absolute temperature: about',tail:'',allowZero:true,hint:'Ratios use absolute kelvin temperatures, not Fahrenheit or Celsius. Twice the kelvin value does not mean twice the perceived hotness.',units:[['nK',1e-9],['µK',1e-6],['mK',1e-3],['K',1],['kK',1e3],['MK',1e6]],refs:[
+ temperature:{label:'Temperature',base:'K',value:300,unit:'K',heading:'HOW HOT IS THAT?',verb:'Absolute temperature: about',tail:'',allowZero:true,hint:'Ratios use absolute kelvin temperatures, not Fahrenheit or Celsius. Twice the kelvin value does not mean twice the perceived hotness.',units:[['nK',1e-9],['µK',1e-6],['mK',1e-3],['K',1],['kK',1e3],['MK',1e6]],refs:[
   ratio('an ultracold atom cloud’s temperature',1e-9,'⚛️','Illustrative ultracold-atom target temperature: 1 nK.'),
   ratio('a Bose–Einstein cloud’s temperature',100e-9,'⚛️','Illustrative ultracold cloud: 100 nK.'),
   ratio('a laser-cooled atom cloud’s temperature',10e-6,'🔬','Illustrative laser-cooled cloud: 10 µK.'),
@@ -101,7 +101,7 @@ export const extraDimensions={
   ratio('a hot plasma’s temperature',100000,'🔥','Illustrative laboratory plasma temperature: 100,000 K.'),
   ratio('the solar corona’s temperature',1e6,'☀️','Rounded illustrative coronal temperature: 1 million K; varies widely.',sun)
  ]},
- substance:{label:'Amount of substance',base:'mol',value:1,unit:'mol',heading:'A WHOLE MOLE LOT',verb:'About as many entities as in',tail:'',hint:'A mole counts specified entities. Each comparison names its molecules or formula units; it does not equate different substances’ masses.',units:[['pmol',1e-12],['nmol',1e-9],['µmol',1e-6],['mmol',1e-3],['mol',1],['kmol',1e3],['Mmol',1e6]],refs:[
+ substance:{label:'Amount',base:'mol',value:1,unit:'mol',heading:'A WHOLE MOLE LOT',verb:'About as many entities as in',tail:'',hint:'Amount of substance is measured in moles. A mole counts specified entities. Each comparison names its molecules or formula units; it does not equate different substances’ masses.',units:[['pmol',1e-12],['nmol',1e-9],['µmol',1e-6],['mmol',1e-3],['mol',1],['kmol',1e3],['Mmol',1e6]],refs:[
   r('small mist droplet of water','small mist droplets of water',dropletMoles(10e-6),'💧','Counts H₂O molecules in an assumed spherical 10 µm droplet; density 1 g/mL and molar mass 18.01528 g/mol.'),
   r('large mist droplet of water','large mist droplets of water',dropletMoles(100e-6),'💧','Counts H₂O molecules in an assumed spherical 100 µm droplet; density 1 g/mL and molar mass 18.01528 g/mol.'),
   r('tiny mist droplet of water','tiny mist droplets of water',dropletMoles(3e-6),'💧','Counts H₂O molecules in an assumed spherical 3 µm droplet. Water density 1 g/mL; molar mass 18.01528 g/mol.'),
@@ -118,7 +118,7 @@ export const extraDimensions={
   r('hot tub of water','hot tubs of water',waterMoles(1500),'🛁','Counts H₂O molecules in an assumed 1,500 L hot tub.'),
   r('backyard pool of water','backyard pools of water',waterMoles(50000),'🏊','Counts H₂O molecules in an assumed 50,000 L pool.')
  ]},
- luminous:{label:'Luminous intensity',base:'cd',value:100,unit:'cd',heading:'LOOKING BRIGHT',verb:'About',tail:'',hint:'Candela measures light in a direction. Bulb and beam examples state the emission angle; lumens are not treated as candela.',units:[['µcd',1e-6],['mcd',1e-3],['cd',1],['kcd',1e3],['Mcd',1e6]],refs:[
+ luminous:{label:'Brightness',base:'cd',value:100,unit:'cd',heading:'LOOKING BRIGHT',verb:'About',tail:'',hint:'Here, brightness means luminous intensity: candela measures light in a direction. Bulb and beam examples state the emission angle; lumens are not treated as candela.',units:[['µcd',1e-6],['mcd',1e-3],['cd',1],['kcd',1e3],['Mcd',1e6]],refs:[
   ratio('a deeply dimmed LED’s intensity',1e-6,'🔴','Hypothetical dimmed indicator intensity in the viewing direction: 1 µcd.'),
   ratio('a filtered candle’s intensity',1e-4,'🕯️','Model: 1 cd candle behind a filter transmitting 0.01% of its light in this direction.'),
   ratio('a faint indicator LED’s intensity',0.001,'🔴','Illustrative viewing-direction intensity: 1 mcd.'),
@@ -131,7 +131,7 @@ export const extraDimensions={
   ratio('a narrow flashlight’s intensity',1000/cone(20),'🔦','Model: 1,000 lm uniformly inside a 20° full-angle cone.'),
   ratio('a searchlight’s intensity',1e6,'🔦','Illustrative on-axis intensity: 1 million cd. Model: 10,000 lm uniformly over a 0.01 sr beam.')
  ]},
- energy:{label:'Energy / Work',base:'J',value:1000,unit:'J',heading:'BIG BURGER ENERGY',verb:'About the energy of',tail:'',hint:'Energy compares a specified event or stored energy. It is distinct from force, power, and battery charge.',units:[['pJ',1e-12],['nJ',1e-9],['µJ',1e-6],['mJ',1e-3],['J',1],['kJ',1e3],['MJ',1e6],['GJ',1e9]],refs:[
+ energy:{label:'Energy',base:'J',value:1000,unit:'J',heading:'BIG BURGER ENERGY',verb:'About the energy of',tail:'',hint:'Energy compares a specified event or stored energy. It is distinct from force, power, and battery charge.',units:[['pJ',1e-12],['nJ',1e-9],['µJ',1e-6],['mJ',1e-3],['J',1],['kJ',1e3],['MJ',1e6],['GJ',1e9]],refs:[
   r('brief LED pulse','brief LED pulses',2e-8,'🔴','Model: 20 mW emitted for 1 µs; energy = power × time.'),
   r('quarter drop','quarter drops',0.00567*G,'🪙','Model: a 5.670 g quarter falling 1 m; E = mgh.'),
   r('baseball toss','baseball tosses',0.5*0.145*10**2,'⚾','Model: a 145 g baseball moving at 10 m/s; E = ½mv².'),

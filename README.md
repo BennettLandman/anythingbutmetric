@@ -7,7 +7,7 @@ An unnecessary conversion service: turn SI measurements into school buses, chees
 1. Choose length, mass, area, volume, time, force, pressure, electric current, thermodynamic temperature, amount of substance, luminous intensity, or energy/work.
 2. Enter a positive measurement and choose its unit/prefix.
 3. Generate three random comparisons, or shuffle again.
-4. Select a comparison, edit the heading/message, and choose a sign style.
+4. Select a comparison, edit the heading/message, and choose a sign style. The original National park, Caution yellow, and Blueprint blue are joined by Roadside diner, Park postcard, Dramatic warning, and Bureau of guesswork. “Surprise me” picks another style without changing your measurement or custom text.
 5. Download PNG or SVG, or print the sign.
 
 The initial 100 m example deliberately starts with buses. Subsequent conversions use randomized reference selection with a guaranteed nearby comparison when available. The 172-reference library covers all 12 measurement types. References remain within the selected physical dimension. Very small or large ratios use scientific notation.
@@ -34,7 +34,11 @@ Each batch reserves one of its three positions for a nearby reference (a ratio f
 
 Definitions and constants follow the [BIPM SI defining constants](https://www.bipm.org/en/measurement-units/si-defining-constants), [kelvin definition](https://www.bipm.org/en/si-base-units/kelvin), [mole definition](https://www.bipm.org/en/si-base-units/mole), and [candela definition](https://www.bipm.org/en/si-base-units/candela). Astronomical temperature examples reference [NASA](https://spdf.gsfc.nasa.gov/pub/documents/old/websites/sunearthday.nasa.gov/2008/TTT/58_hotcorona.php). Other device and object values are explicitly illustrative assumptions.
 
+The menu uses the shorter labels **Current, Temperature, Amount, Brightness, and Energy**. The explanatory notes retain the exact physical meanings, including amount of substance and luminous intensity.
+
 ## Emoji signs
+
+The new sign personalities add checkerboard diner trim, a sunset postcard scene, dramatic hazard stripes, or mock bureau stamps. All seven styles keep editable headings, emoji objects, conversions, and download formats. The SVG renderer in `signs.mjs` grows with the text so that long comparisons remain readable.
 
 Each sign uses the selected reference object's colorful emoji artwork, matching its comparison card. Artwork is embedded directly as SVG data in both the preview and downloaded SVG/PNG, so exports need no fonts, external image server, or internet connection. Artwork attribution appears on the sign, on the website, and here.
 
