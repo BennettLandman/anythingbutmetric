@@ -10,12 +10,14 @@ const cone=degrees=>2*Math.PI*(1-Math.cos(degrees*Math.PI/360));
 // These are explicit illustrative models, not claims that all examples share one size.
 export const additions={
  length:[
+  r('T. rex','T. rexes',12,'🦖','Illustrative adult T. rex: 12 m from head to tail, placed end to end. Individual animals and reconstructions vary.','https://www.amnh.org/exhibitions/dinosaurs-ancient-fossils/theropod-biomechanics/the-problem-of-size'),
   r('microchip feature','microchip features',20e-9,'💻','Illustrative feature width: 20 nm; not a process-node specification.'),
   r('red-light wavelength','red-light wavelengths',650e-9,'🔴','Illustrative red light in vacuum: 650 nm.'),
   r('aircraft-carrier deck','aircraft-carrier decks',333,'🚢','Illustrative large carrier deck length: 333 m.'),
   r('big suspension bridge','big suspension bridges',1280,'🌉','Illustrative main-span length: 1,280 m, excluding approaches.')
  ],
  mass:[
+  r('T. rex','T. rexes',8000,'🦖','Illustrative adult T. rex mass: 8,000 kg, at the upper end of the AMNH guide’s 5,500–8,000 kg range. Fossil-based estimates vary.','https://www.amnh.org/content/download/242887/4197931/file/Trex_EducatorsGuide.pdf'),
   r('football linebacker','football linebackers',110,'🏈','Illustrative player mass: 110 kg.'),
   r('dust speck','dust specks',1e-9,'🌫️','Illustrative dust-speck mass: 1 µg. Dust varies enormously.'),
   r('tiny sugar crystal','tiny sugar crystals',1e-7,'🍬','Illustrative tiny sugar crystal: 0.1 mg.'),
@@ -45,6 +47,7 @@ export const additions={
   r('football game week','football game weeks',604800,'🏈','Seven days between imagined Sunday games.')
  ],
  force:[
+  r('T. rex','T. rexes',8000*G,'🦖','Weight of an illustrative 8,000 kg adult T. rex under standard gravity (9.80665 m/s²). This is body weight, not bite force.','https://www.amnh.org/content/download/242887/4197931/file/Trex_EducatorsGuide.pdf'),
   r('mosquito','mosquitoes',2.5e-6*G,'🦟','Illustrative mosquito mass: 2.5 mg; weight under standard gravity.'),
   r('U.S. quarter','U.S. quarters',0.00567*G,'🪙','Modern U.S. quarter coin: 5.670 g; weight under standard gravity.','https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications'),
   r('football linebacker','football linebackers',110*G,'🏈','Illustrative player mass: 110 kg; weight under standard gravity.'),
