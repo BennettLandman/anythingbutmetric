@@ -4,6 +4,7 @@ import {additions, extraDimensions} from './library.mjs';
 import {namedDimensions} from './named-units.mjs';
 import {radiationDimensions} from './radiation.mjs';
 import {derivedDimensions} from './derived-units.mjs';
+import {humanReferences} from './humans.mjs';
 export {G, PSI, AVOGADRO} from './constants.mjs';
 const mint = 'https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications';
 const nfl = 'https://operations.nfl.com/media/tvglh0mx/2023-rulebook_final.pdf';
@@ -81,6 +82,7 @@ export const dimensions = {
 };
 for (const [id, refs] of Object.entries(additions)) dimensions[id].refs.push(...refs);
 Object.assign(dimensions, extraDimensions, namedDimensions, radiationDimensions, derivedDimensions);
+for(const [id,refs]of Object.entries(humanReferences)) dimensions[id].refs.push(...refs);
 dimensions.temperature.units.push(['°C',1,273.15]);
 dimensions.temperature.hint = 'Temperature accepts kelvin or Celsius (K = °C + 273.15). Comparisons use absolute kelvin ratios, not perceived hotness; 0 °C is not zero kelvin.';
 for(const [group,ids] of Object.entries({

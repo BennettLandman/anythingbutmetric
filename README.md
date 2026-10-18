@@ -15,7 +15,7 @@ An unnecessary conversion service: turn SI measurements into school buses, chees
 4. Select a comparison, edit the heading/message, and choose a sign style. The original National park, Caution yellow, and Blueprint blue are joined by Roadside diner, Park postcard, Dramatic warning, and Bureau of guesswork. “Surprise me” picks another style without changing your measurement or custom text.
 5. Download PNG or SVG, or print the sign.
 
-The initial 100 m example deliberately starts with buses. Subsequent conversions use randomized reference selection with a guaranteed nearby comparison when available. The 551-reference library covers 72 distinct measurement categories and 268 offered unit/scale choices. References remain within the selected physical dimension. Very small or large ratios use scientific notation.
+The initial 100 m example deliberately starts with buses. Subsequent conversions use randomized reference selection with a guaranteed nearby comparison when available. The 589-reference library covers 72 distinct measurement categories and 268 offered unit/scale choices. References remain within the selected physical dimension. Very small or large ratios use scientific notation.
 
 ## Reference values and assumptions
 
@@ -24,6 +24,29 @@ The initial 100 m example deliberately starts with buses. Subsequent conversions
 Modern U.S. quarter coins are available in the random pool for mass (5.670 g per coin), weight under standard gravity, and length: 24.26 mm per coin placed edge to edge, or 1.75 mm per coin stacked flat. Coin specifications come from the U.S. Mint reference linked below.
 
 T. rex comparisons use an illustrative 12 m head-to-tail length and 8,000 kg adult mass, with body weight computed under standard gravity. References link to the American Museum of Natural History; fossil reconstructions and mass estimates vary. The 🦖 emoji appears on cards and exported signs.
+
+`humans.mjs` adds 38 human comparisons across 37 categories, using the 🧑 emoji
+on cards and exported signs. The shared illustrative adult is 70 kg and 1.7 m
+tall, with 1.8 m² skin surface, 70 L body volume, and 0.04 m² total standing
+sole contact. These are assumptions, not population averages. Human comparisons
+remain in the random pool; eight also appear in the rotating tagline pairs.
+
+Human models include breathing, jogging, climbing stairs, door-handle torque,
+twirling, body water, heat capacity, thermal glow, and potassium-40 activity.
+All formulas and qualifications appear in the reference library. Thermal
+properties use the [four-model specific-heat study](https://pubmed.ncbi.nlm.nih.gov/37332308/);
+the illustrative resting heat output follows [NASA’s cooling example](https://ntrs.nasa.gov/api/citations/19980024339/downloads/19980024339.pdf).
+The assumed 60% body-water fraction is contextualized by [USGS](https://www.usgs.gov/water-science-school/science/water-you-water-and-human-body).
+Infrared emission uses an explicitly idealized 300 K blackbody surface and
+[NASA’s radiation law](https://lhea.gsfc.nasa.gov/archive/mwmw/mmw_bbody.html);
+gross emitted flux is distinct from net heat loss and visible brightness.
+Human potassium-40 activity assumes 140 g natural potassium at the same rounded
+31 Bq/g used for the banana model; it is not a dose comparison.
+
+Electrical human comparisons use the [ESD Association’s Human Body Model](https://www.esda.org/esd-overview/esd-fundamentals/part-5-device-sensitivity-and-testing/):
+100 pF and a 1,500 Ω discharge resistor, with an assumed 2 kV starting voltage
+for charge and transient-current examples. This is an electronics test circuit,
+not universal anatomical resistance or an electric-shock safety model.
 
 Force references use `F = m × 9.80665 m/s²`. Pressure references are ratios of magnitudes, with gauge/absolute references labeled; multiple tires do not physically add their pressures. Standard atmosphere, customary-unit factors, and standard gravity follow [NIST](https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9). Other linked primary references include the [U.S. Mint](https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications), [U.S. Currency Education Program](https://www.uscurrency.gov/denominations/1), [NFL field dimensions](https://operations.nfl.com/media/tvglh0mx/2023-rulebook_final.pdf), and [NASA lunar distance](https://spaceplace.nasa.gov/moon-distance/en/).
 
