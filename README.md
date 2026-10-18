@@ -10,11 +10,13 @@ An unnecessary conversion service: turn SI measurements into school buses, chees
 4. Select a comparison, edit the heading/message, and choose a sign style. The original National park, Caution yellow, and Blueprint blue are joined by Roadside diner, Park postcard, Dramatic warning, and Bureau of guesswork. “Surprise me” picks another style without changing your measurement or custom text.
 5. Download PNG or SVG, or print the sign.
 
-The initial 100 m example deliberately starts with buses. Subsequent conversions use randomized reference selection with a guaranteed nearby comparison when available. The 172-reference library covers all 12 measurement types. References remain within the selected physical dimension. Very small or large ratios use scientific notation.
+The initial 100 m example deliberately starts with buses. Subsequent conversions use randomized reference selection with a guaranteed nearby comparison when available. The 173-reference library covers all 12 measurement types. References remain within the selected physical dimension. Very small or large ratios use scientific notation.
 
 ## Reference values and assumptions
 
 `engine.mjs` contains the editable reference library. Each item has a reference value in coherent SI units, an explanatory assumption, and a primary-source link where applicable. Illustrative objects (bananas, cats, buses, and so on) are explicitly labeled assumptions, not universal dimensions. Every assumption is available in the website's reference library.
+
+Modern U.S. quarter coins are available in the random pool for mass (5.670 g per coin), weight under standard gravity, and length: 24.26 mm per coin placed edge to edge, or 1.75 mm per coin stacked flat. Coin specifications come from the U.S. Mint reference linked below.
 
 Force references use `F = m × 9.80665 m/s²`. Pressure references are ratios of magnitudes, with gauge/absolute references labeled; multiple tires do not physically add their pressures. Standard atmosphere, customary-unit factors, and standard gravity follow [NIST](https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9). Other linked primary references include the [U.S. Mint](https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications), [U.S. Currency Education Program](https://www.uscurrency.gov/denominations/1), [NFL field dimensions](https://operations.nfl.com/media/tvglh0mx/2023-rulebook_final.pdf), and [NASA lunar distance](https://spaceplace.nasa.gov/moon-distance/en/).
 

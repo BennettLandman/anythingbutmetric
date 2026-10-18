@@ -46,7 +46,7 @@ export const additions={
  ],
  force:[
   r('mosquito','mosquitoes',2.5e-6*G,'🦟','Illustrative mosquito mass: 2.5 mg; weight under standard gravity.'),
-  r('quarter','quarters',0.00567*G,'🪙','Illustrative modern quarter: 5.670 g; weight under standard gravity.'),
+  r('U.S. quarter','U.S. quarters',0.00567*G,'🪙','Modern U.S. quarter coin: 5.670 g; weight under standard gravity.','https://www.usmint.gov/learn/coins-and-medals/circulating-coins/coin-specifications'),
   r('football linebacker','football linebackers',110*G,'🏈','Illustrative player mass: 110 kg; weight under standard gravity.'),
   r('tiny sugar crystal’s weight','tiny sugar crystals’ weight',1e-7*G,'🍬','Illustrative crystal mass: 0.1 mg; weight under standard gravity.'),
   r('coffee bean’s weight','coffee beans’ weight',0.00015*G,'☕','Illustrative coffee-bean mass: 150 mg; weight under standard gravity.'),
